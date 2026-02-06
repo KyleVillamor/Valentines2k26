@@ -8,7 +8,7 @@ const gif = document.querySelector('.gif');
 // Click sounds
 const yesSound = document.getElementById('yesSound');
 const noSound = document.getElementById('noSound');
-const mediaQuery = window.matchMedia('(max-width: 600px)');
+const mediaQuery = window.matchMedia('(min-width: 300px)');
 
 const match = document.getElementById('match');
 const paper = document.getElementById('paper');
@@ -36,7 +36,7 @@ yesBtn.addEventListener('click', unlockAllAudio, { once: true });
 noBtn.addEventListener('click', unlockAllAudio, { once: true });
 
 yesBtn.addEventListener('click', () => {
-    if (window.matchMedia('(min-width: 400px)').matches) {
+    if (window.matchMedia('(min-width: 3s00px)').matches) {
     // Mobile
     responseText.textContent = 'Yaaayyy! I’m so happy! Hehehehe';
     title.textContent = 'Happy Valentines Day!';
