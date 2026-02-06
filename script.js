@@ -163,10 +163,10 @@ match.addEventListener('click', () => {
       setTimeout(() => {
         paperImg.style.display = 'none';
         document.querySelector('.box').style.display = 'none';
-      }, 800);
-    }, 2000);
+      }, 0);
+    }, 1800);
 
-  }, 1000); // <-- delay matches match transition to center
+  }, 800); // <-- delay matches match transition to center
 });
 
 

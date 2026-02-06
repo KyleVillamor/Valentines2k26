@@ -146,7 +146,7 @@ button:hover { transform: scale(1.1); background-color: #e7271b; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1;
+  z-index: 4;
   cursor: pointer;
   transition: transform 1s ease-in-out;
   transform-origin: bottom center;
@@ -196,7 +196,7 @@ button:hover { transform: scale(1.1); background-color: #e7271b; }
    ========================= */
 
 .match.move-to-center {
-  transform: translate(-140px, -180px) rotate(-20deg);
+  transform: translate(0px, -250px) rotate(0deg);
 }
 
 .match.ignite .flame {
@@ -294,8 +294,8 @@ canvas {
 /* RESPONSIVE */
 @media (max-width: 600px) {
   .box { width: 90vw; height: 90vw; }
-  .photo-container { width: 80vw; }
-  .container { width: 90vw; padding: 15px; }
-  .match { right: 15px; bottom: 40px; transform: scale(0.85); }
+  .photo-container { width: 130vw; }
+  .container { width: 70vw; padding: 15px; }
+  .match { right: 185px; bottom: 50px; transform: scale(0.85); }
   button { font-size: clamp(16px, 5vw, 22px); padding: 8px 16px; }
 }
