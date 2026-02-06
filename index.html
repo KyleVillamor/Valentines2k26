@@ -1,46 +1,51 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Will You Be My Valentine? 💋</title>
-    <link rel="icon" type="image/x-icon" href="public/heart.gif">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Handjet:wght@100..900&family=Tiny5&display=swap" rel="stylesheet">
-    <audio id="yesSound" src="https://www.soundjay.com/human/sounds/applause-01.mp3"></audio>
-    <audio id="noSound" src="public/lemme.mp3"></audio>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-</head>
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Will You Be My Valentine? 💋</title>
+        <link rel="icon" type="image/x-icon" href="public/heart.gif">
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Handjet:wght@100..900&family=Tiny5&display=swap" rel="stylesheet">
+        <audio id="yesSound" src="https://www.soundjay.com/human/sounds/applause-01.mp3"></audio>
+        <audio id="noSound" src="public/lemme.mp3"></audio>
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    </head>
 <body>
-  <!-- Original container behind -->
-  <div class="container">
+  <div class="wrapper">
+    <!-- 1️⃣ PHOTO -->
+    <div class="photo-container" id="paper">
+      <img id="paperImg" src="public/heartBurn.png" alt="Paper Heart">
+      <div class="burn-flames"></div>
+    </div>
+
+    <!-- 2️⃣ BOX -->
+    <div class="box"></div>
+
+    <!-- 3️⃣ BUTTONS & TEXT -->
+    <div class="container">
       <h1>Will You Be My Valentine? 💖</h1>
-      <img src="https://i.pinimg.com/originals/07/6d/a6/076da60f5b9569f2cc8cadee0e8c1992.gif" alt="Cute GIF" class="gif">
+      <img class="gif" src="https://media1.tenor.com/m/b1aQp1QbfWkAAAAd/san-valentin.gif">
       <div class="buttons">
-          <button id="yesBtn">Yes</button>
-          <button id="noBtn">No</button>
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
       </div>
       <p id="responseText"></p>
-  </div>
-
-  <!-- 3D box with photo -->
-  <div class="box">
-      <div class="photo-container">
-          <img src="public/heartBurn.png" alt="Valentine Photo">
-      </div>
-  </div>
-
-   <!-- Matchstick beside the box -->
-    <div class="match">
-        <div class="stick"></div>
-        <div class="flame"></div>
     </div>
+  </div>
+
+      <!-- Matchstick beside the box -->
+        <div class="match" id="match">
+            <div class="stick"></div>
+            <div class="flame"></div>
+        </div>
 
   <canvas id="heartsCanvas"></canvas>
   <script src="script.js"></script>
 </body>
-</html>
+
+    </html>

@@ -9,6 +9,12 @@ const gif = document.querySelector('.gif');
 const yesSound = document.getElementById('yesSound');
 const noSound = document.getElementById('noSound');
 
+const match = document.getElementById('match');
+const paper = document.getElementById('paper');
+const paperImg = document.getElementById('paperImg');
+
+let burning = false;
+
 // ===== AUDIO UNLOCK =====
 let audioUnlocked = false;
 
@@ -28,7 +34,6 @@ function unlockAllAudio() {
 yesBtn.addEventListener('click', unlockAllAudio, { once: true });
 noBtn.addEventListener('click', unlockAllAudio, { once: true });
 
-// ===== YES BUTTON CLICK =====
 yesBtn.addEventListener('click', () => {
   responseText.textContent = 'Yay! I’m so happy! 💖 💞';
   gif.src = 'https://i.pinimg.com/originals/b4/65/34/b46534530b0ef3ffac6636f068dd2e12.gif';
@@ -46,29 +51,33 @@ yesBtn.addEventListener('click', () => {
   });
 });
 
-// ===== NO BUTTON CLICK (moves once) =====
 noBtn.addEventListener('click', () => {
-  // Play sound
   noSound.play();
 
-  // Move button to a random location
-  const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-  const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+  const container = document.querySelector('.container');
+  const rect = container.getBoundingClientRect();
+  const btnRect = noBtn.getBoundingClientRect();
+  const padding = 12;
+
+  const maxX = rect.width - btnRect.width - padding;
+  const maxY = rect.height - btnRect.height - padding;
+
+  const x = Math.max(padding, Math.random() * maxX);
+  const y = Math.max(padding, Math.random() * maxY);
 
   noBtn.style.position = 'absolute';
   noBtn.style.left = `${x}px`;
   noBtn.style.top = `${y}px`;
 });
 
+
 // ===== HEARTS CANVAS =====
 const canvas = document.getElementById('heartsCanvas');
 const ctx = canvas.getContext('2d');
-
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const hearts = [];
-
 class Heart {
   constructor() {
     this.x = Math.random() * canvas.width;
@@ -77,31 +86,23 @@ class Heart {
     this.speed = Math.random() * 2 + 1;
     this.color = Math.random() > 0.5 ? '#ff6f61' : '#ff3b2f';
   }
-
   draw() {
     ctx.beginPath();
     ctx.moveTo(this.x, this.y);
     ctx.bezierCurveTo(
-      this.x - this.size / 2,
-      this.y - this.size / 4,
-      this.x - this.size,
-      this.y + this.size / 2,
-      this.x,
-      this.y + this.size
+      this.x - this.size/2, this.y - this.size/4,
+      this.x - this.size, this.y + this.size/2,
+      this.x, this.y + this.size
     );
     ctx.bezierCurveTo(
-      this.x + this.size,
-      this.y + this.size / 2,
-      this.x + this.size / 2,
-      this.y - this.size / 4,
-      this.x,
-      this.y
+      this.x + this.size, this.y + this.size/2,
+      this.x + this.size/2, this.y - this.size/4,
+      this.x, this.y
     );
     ctx.closePath();
     ctx.fillStyle = this.color;
     ctx.fill();
   }
-
   update() {
     this.y += this.speed;
     if (this.y > canvas.height) {
@@ -112,7 +113,6 @@ class Heart {
   }
 }
 
-// Add hearts on mouse move
 document.addEventListener('mousemove', (e) => {
   const heart = new Heart();
   heart.x = e.clientX;
@@ -122,22 +122,66 @@ document.addEventListener('mousemove', (e) => {
   hearts.push(heart);
 });
 
-function init() {
-  for (let i = 0; i < 50; i++) {
-    hearts.push(new Heart());
-  }
-}
-
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  hearts.forEach(heart => heart.update());
-  requestAnimationFrame(animate);
-}
-
-init();
-animate();
+function init() { for (let i=0;i<50;i++) hearts.push(new Heart()); }
+function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); hearts.forEach(h=>h.update()); requestAnimationFrame(animate); }
+init(); animate();
 
 window.addEventListener('resize', () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 });
+
+// ===== MATCH & BURN =====
+match.addEventListener('click', () => {
+  if (burning) return;
+  burning = true;
+
+  // 1️⃣ Move match to center
+  match.classList.add('move-to-center');
+
+  // 2️⃣ Wait for match to reach center (match CSS transition ~1s)
+  setTimeout(() => {
+    match.classList.add('ignite');       // flame bigger
+    paper.classList.add('burning');      // show burn flames
+
+    // Start burning the image
+    let burn = 1;
+    const burnInterval = setInterval(() => {
+      burn -= 0.06;
+      paperImg.style.transform = `scale(${burn})`;
+      paperImg.style.opacity = burn;
+      createAsh();
+    }, 120);
+
+    // Stop burn after 2 seconds
+    setTimeout(() => {
+      clearInterval(burnInterval);
+      paper.classList.remove('burning');
+      paper.classList.add('burn-done');
+      match.classList.add('fade-out');
+
+      setTimeout(() => {
+        paperImg.style.display = 'none';
+        document.querySelector('.box').style.display = 'none';
+      }, 800);
+    }, 2000);
+
+  }, 1000); // <-- delay matches match transition to center
+});
+
+
+function createAsh() {
+  const ash = document.createElement('div');
+  ash.className = 'ash';
+  ash.style.left = Math.random() * 80 + 10 + '%';
+  ash.style.top = '50%';
+  paper.appendChild(ash);
+
+  let y = 0;
+  const fall = setInterval(() => {
+    y += 3;
+    ash.style.transform = `translateY(${y}px)`;
+    ash.style.opacity -= 0.05;
+    if (y > 90) { ash.remove(); clearInterval(fall); }
+  }, 30);
+}
