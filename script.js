@@ -35,12 +35,12 @@ yesBtn.addEventListener('click', unlockAllAudio, { once: true });
 noBtn.addEventListener('click', unlockAllAudio, { once: true });
 
 yesBtn.addEventListener('click', () => {
-  responseText.textContent = 'Yay! I’m so happy! 💖 💞';
+  responseText.textContent = 'Yaaayyy! I’m so happy! Hehehehehe';
+  title.textContent = 'Happy Valentines Day!';
   gif.src = 'https://i.pinimg.com/originals/b4/65/34/b46534530b0ef3ffac6636f068dd2e12.gif';
 
   yesBtn.style.display = 'none';
   noBtn.style.display = 'none';
-  title.style.display = 'none';
 
   yesSound.play();
 
