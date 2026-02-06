@@ -36,7 +36,7 @@ yesBtn.addEventListener('click', unlockAllAudio, { once: true });
 noBtn.addEventListener('click', unlockAllAudio, { once: true });
 
 yesBtn.addEventListener('click', () => {
-    if (window.matchMedia('(max-width: 768px)').matches) {
+    if (window.matchMedia('(min-width: 400px)').matches) {
     // Mobile
     responseText.textContent = 'Yaaayyy! I’m so happy! Hehehehe';
     title.textContent = 'Happy Valentines Day!';
