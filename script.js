@@ -14,6 +14,18 @@ const match = document.getElementById('match');
 const paper = document.getElementById('paper');
 const paperImg = document.getElementById('paperImg');
 
+const noResponses = [
+  "Are you sure? 🥺",
+  "Really really sure?",
+  "I’ll wait… 😔",
+  "You’re breaking my heart rn 💔",
+  "Last chance 😭",
+  "Pleaseeee? 🥹",
+  "Okay… but I’m still hoping 😭"
+];
+
+let noClickCount = 0;
+
 let burning = false;
 
 // ===== AUDIO UNLOCK =====
@@ -61,6 +73,11 @@ yesBtn.addEventListener('click', () => {
 
 noBtn.addEventListener('click', () => {
   noSound.play();
+
+  responseText.textContent =
+  noResponses[noClickCount % noResponses.length];
+
+  noClickCount++;
 
   const container = document.querySelector('.container');
   const rect = container.getBoundingClientRect();
@@ -170,7 +187,25 @@ match.addEventListener('click', () => {
 
       setTimeout(() => {
         paperImg.style.display = 'none';
-        document.querySelector('.box').style.display = 'none';
+
+        // 🔥 burn the box like the photo
+        const box = document.querySelector('.box');
+        box.classList.add('burning'); // triggers the flames
+
+        // create ash while burning
+        let ashCount = 0;
+        const ashInterval = setInterval(() => {
+          createAsh(box);
+          ashCount++;
+          if (ashCount > 30) clearInterval(ashInterval);
+        }, 100);
+
+        // hide box after burn
+        setTimeout(() => {
+          box.classList.remove('burning');
+          box.classList.add('burn-done');
+          box.style.opacity = 0;
+        }, 800);
       }, 0);
     }, 1800);
 
@@ -178,12 +213,12 @@ match.addEventListener('click', () => {
 });
 
 
-function createAsh() {
+function createAsh(parent) {
   const ash = document.createElement('div');
   ash.className = 'ash';
   ash.style.left = Math.random() * 80 + 10 + '%';
   ash.style.top = '50%';
-  paper.appendChild(ash);
+  parent.appendChild(ash);
 
   let y = 0;
   const fall = setInterval(() => {
@@ -193,3 +228,4 @@ function createAsh() {
     if (y > 90) { ash.remove(); clearInterval(fall); }
   }, 30);
 }
+
